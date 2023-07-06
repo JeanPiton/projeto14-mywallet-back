@@ -2,7 +2,7 @@ import express, { json } from "express"
 import cors from "cors"
 import dotenv from "dotenv"
 import { MongoClient } from "mongodb"
-import { signup } from "./controllers/userController.js"
+import { signin, signup } from "./controllers/userController.js"
 dotenv.config()
 
 const PORT = 5000
@@ -19,4 +19,6 @@ try{
 }
 export const db = mongoClient.db()
 
-server.post("/users", signup)
+server.post("/sign-up", signup)
+
+server.post("/sign-in", signin)

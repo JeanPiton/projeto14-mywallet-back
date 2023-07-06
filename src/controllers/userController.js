@@ -21,3 +21,19 @@ export async function signup (req,res){
         console.log(err)
     }
 }
+
+export async function signin(req,res){
+    const {email, password} = req.body
+    const scheme = joi.object({email:joi.string().email().required(),password:joi.string().required()})
+    const validation = scheme.validate({email, password})
+    try{
+        if(validation.error) return res.status(422).send(validation.error.message)
+        const user = await db.collection("users").findOne({email})
+        if(!user) return res.status(404).send("user not found")
+        if(!bcrypt.compareSync(password,user.password)) return res.sendStatus(401)
+        res.send(200)
+    }catch(err){
+        res.sendStatus(500)
+        console.log(err)
+    }
+}
