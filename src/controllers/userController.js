@@ -1,6 +1,7 @@
 import joi from "joi"
 import bcrypt from "bcrypt"
 import {db} from "../app.js"
+import {v4 as uuid} from "uuid"
 
 export async function signup (req,res){
     const {name, email, password} = req.body
@@ -31,7 +32,9 @@ export async function signin(req,res){
         const user = await db.collection("users").findOne({email})
         if(!user) return res.status(404).send("user not found")
         if(!bcrypt.compareSync(password,user.password)) return res.sendStatus(401)
-        res.send(200)
+        const token = uuid()
+        await db.collection("session").insertOne({email,token})
+        res.status(200).send({name:user.name,token,email})
     }catch(err){
         res.sendStatus(500)
         console.log(err)

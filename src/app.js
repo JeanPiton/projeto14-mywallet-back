@@ -3,6 +3,7 @@ import cors from "cors"
 import dotenv from "dotenv"
 import { MongoClient } from "mongodb"
 import { signin, signup } from "./controllers/userController.js"
+import { getToken } from "./controllers/sessionController.js"
 dotenv.config()
 
 const PORT = 5000
@@ -22,3 +23,5 @@ export const db = mongoClient.db()
 server.post("/sign-up", signup)
 
 server.post("/sign-in", signin)
+
+server.post("/token", getToken)
