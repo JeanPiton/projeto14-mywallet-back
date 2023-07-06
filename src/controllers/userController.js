@@ -1,5 +1,6 @@
 import joi from "joi"
 import bcrypt from "bcrypt"
+import {db} from "../app.js"
 
 export async function signup (req,res){
     const {name, email, password} = req.body
@@ -17,5 +18,6 @@ export async function signup (req,res){
         return res.sendStatus(201)
     }catch(err){
         res.sendStatus(500)
+        console.log(err)
     }
 }

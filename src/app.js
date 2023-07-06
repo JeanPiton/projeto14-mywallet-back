@@ -12,10 +12,11 @@ server.use(json())
 server.listen(PORT,()=>{console.log(`Server running at http://localhost:${PORT}`)})
 
 const mongoClient = new MongoClient(process.env.DATABASE_URL)
-let db
-mongoClient.connect()
-.then(()=>db = mongoClient.db())
-.catch(err=>{console.log(err)})
+try{
+    await mongoClient.connect()
+}catch(err){
+    console.log(err)
+}
+export const db = mongoClient.db()
 
-
-server.post("/users",signup)
+server.post("/users", signup)
