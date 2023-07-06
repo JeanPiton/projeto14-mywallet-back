@@ -1,4 +1,4 @@
-import {db} from "../app.js"
+import { db } from "../database/database.connection.js"
 
 export async function getToken(req,res){
     const {email,token} = req.body
