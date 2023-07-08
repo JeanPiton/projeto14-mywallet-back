@@ -9,7 +9,7 @@ export async function validateAuth(req,res,next){
     try {
         const session = await db.collection("session").findOne({token})
         if(!session) return res.sendStatus(401)
-        res.locals.email = session.email
+        res.locals.session = session
 
         next()
 

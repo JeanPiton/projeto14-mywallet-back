@@ -8,5 +8,17 @@ export async function getToken(req,res){
         res.sendStatus(401)
     }catch(err){
         console.log(err)
+        res.sendStatus(500)
+    }
+}
+
+export async function endSession(req,res){
+    const token = res.locals.session.token
+    try {
+        await db.collection("session").deleteOne({token})
+        res.sendStatus(200)
+    } catch (err) {
+        console.log(err)
+        res.sendStatus(500)
     }
 }

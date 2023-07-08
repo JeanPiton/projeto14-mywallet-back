@@ -13,7 +13,7 @@ export async function registerTransaction(req,res){
 }
 
 export async function listTransactions(req,res){
-    const email = res.locals.email
+    const email = res.locals.session.email
     try {
         const list = await db.collection("transactions").find({email}).toArray()
         res.status(200).send(list)
