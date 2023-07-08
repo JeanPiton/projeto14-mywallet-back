@@ -11,3 +11,14 @@ export async function registerTransaction(req,res){
         console.log(err)
     }
 }
+
+export async function listTransactions(req,res){
+    const email = res.locals.email
+    try {
+        const list = await db.collection("transactions").find({email}).toArray()
+        res.status(200).send(list)
+    } catch (err) {
+        res.sendStatus(500)
+        console.log(err)
+    }
+}
