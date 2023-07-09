@@ -22,3 +22,13 @@ export async function listTransactions(req,res){
         console.log(err)
     }
 }
+
+export async function deleteTransaction(req,res){
+    try {
+        await db.collection("transactions").deleteOne({_id:req.body})
+        res.sendStatus(200)
+    } catch (err) {
+        res.sendStatus(500)
+        console.log(err)
+    }
+}
