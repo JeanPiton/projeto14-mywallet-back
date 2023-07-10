@@ -37,7 +37,7 @@ export async function deleteTransaction(req,res){
 export async function updateTransaction(req,res){
     const {value, desc, itemId} = req.body
     try {
-        const p = await db.collection("transactions").updateOne({_id:new mongodb.ObjectId(itemId)},{value,desc})
+        const p = await db.collection("transactions").updateOne({_id:new mongodb.ObjectId(itemId)},{$set:{value,desc}})
         res.status(200).send(p)
     } catch (err) {
         res.sendStatus(500)
