@@ -10,3 +10,9 @@ export const schemaTransaction = joi.object({
 export const schemaDelete = joi.object({
     itemId:joi.string().hex().length(24).required()
 })
+
+export const schemaUpdate = joi.object({
+    value:joi.number().positive().required(),
+    desc:joi.string().required(),
+    itemId:joi.string().hex().length(24).required()
+})
