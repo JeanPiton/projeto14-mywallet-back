@@ -8,5 +8,5 @@ export const schemaTransaction = joi.object({
 })
 
 export const schemaDelete = joi.object({
-    id:joi.string().hex().length(24).required()
+    itemId:joi.string().hex().length(24).required()
 })
