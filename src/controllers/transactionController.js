@@ -25,7 +25,7 @@ export async function listTransactions(req,res){
 
 export async function deleteTransaction(req,res){
     try {
-        await db.collection("transactions").deleteOne({_id:req.body})
+        await db.collection("transactions").deleteOne({_id:req.params.itemId})
         res.sendStatus(200)
     } catch (err) {
         res.sendStatus(500)
