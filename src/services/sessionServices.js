@@ -1,13 +1,13 @@
-import { db } from "../database/database.connection.js"
+import { sessionRepository } from "../Repositories/sessionRepository.js"
 import unauthorizedError from "../errors/UnauthorizedError.js"
 
 async function getToken(email, token){
-    const user = await db.collection("session").findOne({email,token})
+    const user = await sessionRepository.findSession(email, token)
     if(!user) throw unauthorizedError("User not logged")
 }
 
 async function endSession(token){
-    await db.collection("session").deleteOne({token})
+    await sessionRepository.endSession(token)
 }
 
 export const sessionServices = {

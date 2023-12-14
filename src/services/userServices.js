@@ -1,21 +1,23 @@
 import bcrypt from "bcrypt"
 import { v4 as uuid } from "uuid"
-import { db } from "../database/database.connection.js"
+import { sessionRepository } from "../Repositories/sessionRepository.js"
+import { userRepository } from "../Repositories/userRepository.js"
 import conflictError from "../errors/ConflictError.js"
 import unauthorizedError from "../errors/UnauthorizedError.js"
 
 async function signup(name, email, password){
-    if(await db.collection("users").findOne({email:email})) throw conflictError("user already exists")
+    const user = await userRepository.findUser(email)
+    if(user) throw conflictError("user already exists")
     const hash = bcrypt.hashSync(password,10)
-    db.collection("users").insertOne({name:name,email:email,password:hash})
+    await userRepository.createUser(name, email, hash)
 }
 
 async function signin(email, password){
-    const user = await db.collection("users").findOne({email})
-    if(!user) throw unauthorizedError("user or password is incorect")
-    if(!bcrypt.compareSync(password,user.password)) throw unauthorizedError("user or password is incorect")
+    const user = await userRepository.findUser(email)
+    if(!user) throw unauthorizedError("user or password is incorrect")
+    if(!bcrypt.compareSync(password,user.password)) throw unauthorizedError("user or password is incorrect")
     const token = uuid()
-    await db.collection("session").insertOne({email,token})
+    await sessionRepository.createSession(email, token)
     return {name: user.name, token, email}
 }
 

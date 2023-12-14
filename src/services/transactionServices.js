@@ -1,23 +1,23 @@
 import dayjs from "dayjs"
-import mongodb from "mongodb"
+import { transactionRepository } from "../Repositories/transactionRepository"
 
 async function registerTransaction(info){
     const day = dayjs(Date.now()).format("DD/MM")
-    await db.collection("transactions").insertOne({...info,day})
+    await transactionRepository.registerTransaction(info, day)
 }
 
 async function listTransactions(email){
-    const list = await db.collection("transactions").find({email}).toArray()
+    const list = await transactionRepository.listTransactions(email)
     return list
 }
 
 async function deleteTransaction(itemId){
-    const transaction = await db.collection("transactions").deleteOne({_id:new mongodb.ObjectId(itemId)})
+    const transaction = await transactionRepository.deleteTransaction(itemId)
     return transaction
 }
 
 async function updateTransaction(value, desc, itemId){
-    const transaction = await db.collection("transactions").updateOne({_id:new mongodb.ObjectId(itemId)},{$set:{value,desc}})
+    const transaction = await transactionRepository.updateTransaction(value, desc, itemId)
     return transaction
 }
 
