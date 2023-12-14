@@ -1,5 +1,5 @@
 import mongodb from "mongodb"
-import { db } from "../database/database.connection"
+import { db } from "../database/database.connection.js"
 
 async function registerTransaction(info, day){
     await db.collection("transactions").insertOne({...info,day})
