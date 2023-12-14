@@ -1,5 +1,5 @@
 import dayjs from "dayjs"
-import { transactionRepository } from "../Repositories/transactionRepository"
+import { transactionRepository } from "../Repositories/transactionRepository.js"
 
 async function registerTransaction(info){
     const day = dayjs(Date.now()).format("DD/MM")
