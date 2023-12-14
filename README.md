@@ -1,5 +1,5 @@
 # MyWallet-back
-Back-end application for a financial management app.
+Back-end application for a financial management app. <a href="https://my-wallet-api-uq2y.onrender.com">Demo</a>
 
 # How it works
 <details>
@@ -126,6 +126,6 @@ Back-end application for a financial management app.
 # How to run 
 - Clone repository
 - Use `npm install`
-- Create file `.env` with properties `DATABASE_URL` and `PORT`
+- Create file `.env` as seen in `.env.example`
 - To run in dev mode use `npm run dev`
 - To run in deploy mode use `npm run start`
