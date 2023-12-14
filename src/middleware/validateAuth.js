@@ -1,19 +1,15 @@
 import { db } from "../database/database.connection.js"
+import unauthorizedError from "../errors/UnauthorizedError.js"
 
 export async function validateAuth(req,res,next){
     const {authorization} = req.headers
     const token = authorization?.replace("Bearer ","")
 
-    if(!token) return res.sendStatus(401)
+    if(!token) throw unauthorizedError("token missing")
 
-    try {
-        const session = await db.collection("session").findOne({token})
-        if(!session) return res.sendStatus(401)
-        res.locals.session = session
+    const session = await db.collection("session").findOne({token})
+    if(!session) throw unauthorizedError("not logged in")
+    res.locals.session = session
 
-        next()
-
-    } catch (err) {
-        res.status(500).send(err.message)
-    }
+    next()
 }

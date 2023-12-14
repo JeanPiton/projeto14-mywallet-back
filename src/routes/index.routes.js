@@ -1,7 +1,7 @@
 import { Router } from "express";
-import userRouter from "./user.routes.js";
 import sessionRouter from "./session.routes.js";
 import transactionRouter from "./transaction.routes.js";
+import userRouter from "./user.routes.js";
 
 const router = Router()
 
